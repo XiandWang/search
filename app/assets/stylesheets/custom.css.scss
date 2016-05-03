@@ -1,0 +1,64 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}
+
+.submit {
+	margin-top:10px;
+}
+ 
+.main {
+	background: {
+		color:#F5F5F5;
+	}
+}
+
+.url {
+	color:#2E8B57;
+	display: block;
+}
+
+.even {
+	background: {
+		color: #F5F5F5;
+	}
+}
+
+.link {
+	color: #2200CC;
+}
+
+.g {
+	color:#4885ed;
+}
+
+.first {
+		color: #db3236;
+
+}
+
+.second {
+	color: #f4c20d;
+}
+
+.list {
+	margin-bottom: 30px;
+}

@@ -1,0 +1,19 @@
+<body class="main">
+	<div class="container">
+		<div class="center jumbotron main">
+
+		  <h1><span class="g">G</span><span class="first">1</span><span class="second">1</span></h1>
+
+			<%= form_for :search_results, url: :search_results, method: :post do |f| %>
+			    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+			    <%= text_field_tag :keywords, nil,
+			               placeholder: "Search", class: "form-control" %> 
+			    <%= submit_tag "Submit", class: "btn btn-danger submit" %>
+			<% end %>
+
+		</div>
+
+
+	</div>
+
+</body>
