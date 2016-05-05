@@ -3,7 +3,7 @@ class SearchResultsController < ApplicationController
 	def index
 	  if params[:keywords].present?
 	  	@str = params[:keywords]
-	  	if (@str.split.length > 3) 
+	  	if (!@str.ascii_only?) 
 	  		@error = true
 	  		@results = []
 	  		return
@@ -33,6 +33,7 @@ class SearchResultsController < ApplicationController
 	  else 
 	  	@term = "Nothing"
 	  	@results = []
+	  	@time = 0
 	  	sleep 2
 	  end
 
@@ -40,15 +41,21 @@ class SearchResultsController < ApplicationController
 
 
 	def get_results(bing, str) 
-		num = 100 + Random.rand(200)
+		num = 100
 		res = bing.search(str).take(2)
-		offset = 200
+		top1 = res[0]
+		top2 = res[1]
+		offset = 80
 		while num > 0 && res.size > 0
 			res += bing.search(str, offset)
 			num = num - res.size
 			offset = offset + 60
 		end
 
+		res=res.drop 2
+
+		res.insert(Random.rand(5...10), top1)
+		res.insert(Random.rand(10...15), top2)
 		res
 	end
 
