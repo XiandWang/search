@@ -24,7 +24,7 @@ class SearchResultsController < ApplicationController
 			@time = end_time - begin_time			
 			i = @results.size
 			@results.each do |r|
-				@term.infos.create!(title: r[:Title], url: r[:Url], desc: r[:Description],  weight: i)
+				@term.infos.create(title: r[:Title], url: r[:Url], desc: r[:Description],  weight: i)
 				i -= 1
 			end
 			@results = @term.infos
@@ -41,22 +41,38 @@ class SearchResultsController < ApplicationController
 
 
 	def get_results(bing, str) 
-		num = 100
+		num = 50
 		res = bing.search(str).take(2)
+		if res.size == 0
+			return []
+		end
 		top1 = res[0]
 		top2 = res[1]
 		offset = 80
 		while num > 0 && res.size > 0
-			res += bing.search(str, offset)
+			res += bing.search(str, offset).take(20)
 			num = num - res.size
 			offset = offset + 60
 		end
 
-		res=res.drop 2
+		words = %w(time person year way day thing man world life hand part child eye problem fact)
+		words.shuffle!
 
-		res.insert(Random.rand(5...10), top1)
+		res += bing.search(words[0],10).take 10
+		res += bing.search(words[1], 10).take 10
+		res += bing.search(words[2], 10).take 10	
+		res += bing.search(words[3], 10).take 10
+		res += bing.search(words[4], 10).take 10
+		
+		res=res.drop 2
+		res.shuffle!
+		res.insert(Random.rand(3...10), top1)
 		res.insert(Random.rand(10...15), top2)
-		res
+		if res.size > 0
+			return res
+		else
+			return []
+		end
 	end
 
 	def create
